@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Test 1 malgranda, sed valida Voko-artikolo..."
+curl -d $'<?xml version="1.0"?><vortaro>\n<art mrk="x">\n<kap>test</kap>\n<drv mrk="x.0o"><kap><tld/>o</kap><dif>Test</dif></drv>\n</art>\n</vortaro>\n' http://localhost:8787
+
+echo "Test 2 Artikoleto, kie mankas mrk, <kap> and <art> kaj <drv>..."
+curl -d $'<?xml version="1.0"?><vortaro><art>\n<drv><dif>Test</dif></drv>\n</art>\n</vortaro>' http://localhost:8787

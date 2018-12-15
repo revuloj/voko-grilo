@@ -6,8 +6,8 @@ package de.steloj;
 import org.eclipse.jetty.server.Server;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.StringReader;
+import java.io.Writer;
+import java.io.Reader;
 
 import java.net.URL;
 
@@ -34,13 +34,16 @@ import com.thaiopensource.validate.SchemaReader;
  */
 public class RngKontrolo extends AbstractHandler
 {
-    URL rncFile = this.getClass().getResource("/resources/vokoxml.rnc");
+    URL rncFile = this.getClass().getResource("/vokoxml.rnc");
 
     public RngKontrolo() {
         super();
         //rncFile = this.getClass().getResource("/resources/vokoxml.rnc")
     }
 
+    public URL getRncFile() {
+        return rncFile;
+    }
 
     @Override
     public void handle( String target,
@@ -49,23 +52,24 @@ public class RngKontrolo extends AbstractHandler
                         HttpServletResponse response ) throws IOException,
                                                       ServletException
     {
-        // Declare response encoding and types
-        response.setContentType("text/html; charset=utf-8");
-
-        // Declare response status code
-        response.setStatus(HttpServletResponse.SC_OK);
-
-        // Write back response
-        response.getWriter().println("<h1>Saluton!</h1>");
-
-        // Inform jetty that this request has now been handled
-        baseRequest.setHandled(true);
+        try {
+            // Declare response encoding and types
+            response.setContentType("text/plain; charset=utf-8"); // JSON?
+            // check XML agains RelaxNG vokoxml.rnc
+            relaxng(request.getReader(),response.getWriter());
+            // Declare response status code
+            response.setStatus(HttpServletResponse.SC_OK); // chu tro malfrue?
+            // Inform jetty that this request has now been handled
+            baseRequest.setHandled(true);
+        } catch (Exception Exc) {
+            System.out.println(Exc.toString());
+        }
     }
 
-    public String relaxng(String Xml) {
+    public String relaxng(Reader reader, Writer writer) throws org.xml.sax.SAXException, java.io.IOException {
 
         // error handler / out string writer
-        StringWriter writer = new StringWriter();
+        //StringWriter writer = new StringWriter();
         PropertyMapBuilder propertyMapBuilder = new PropertyMapBuilder();
         propertyMapBuilder.put(ValidateProperty.ERROR_HANDLER, new ErrorHandlerImpl(writer));
         PropertyMap propertyMap = propertyMapBuilder.toPropertyMap();
@@ -73,10 +77,12 @@ public class RngKontrolo extends AbstractHandler
         // prepare valditor / load schema
         SchemaReader schemaReader = CompactSchemaReader.getInstance();
         ValidationDriver driver = new ValidationDriver(propertyMap,schemaReader);
+        System.out.println(rncFile.toString());
         InputSource rncIn = driver.uriOrFileInputSource(rncFile.toString());
+
         if (driver.loadSchema(rncIn)) {
             // XML fonto    
-            StringReader reader = new StringReader(Xml);
+            //StringReader reader = new StringReader(Xml);
             InputSource xmlIn = new InputSource(reader);
             
             // validigu
@@ -85,7 +91,6 @@ public class RngKontrolo extends AbstractHandler
         } else {
             return null;
         }
-        
     }
 
 /*

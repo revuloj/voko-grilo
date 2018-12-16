@@ -1,17 +1,8 @@
 #!/bin/bash
 
-export repo=/home/wolfram/.m2/repository
-
-# can be created by mvn dependency:build-classpath
-export CLASSPATH=$repo/junit/junit/3.8.1/junit-3.8.1.jar:\
-$repo/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:\
-$repo/org/eclipse/jetty/jetty-server/9.4.14.v20181114/jetty-server-9.4.14.v20181114.jar:\
-$repo/org/eclipse/jetty/jetty-http/9.4.14.v20181114/jetty-http-9.4.14.v20181114.jar:\
-$repo/org/eclipse/jetty/jetty-util/9.4.14.v20181114/jetty-util-9.4.14.v20181114.jar:\
-$repo/org/eclipse/jetty/jetty-io/9.4.14.v20181114/jetty-io-9.4.14.v20181114.jar:\
-/usr/share/java/jing.jar
-
-#export CLASSPATH=/usr/share/java/*
-
-exec java -classpath $CLASSPATH:target/RngKtrl-1.0-SNAPSHOT.jar de.steloj.RngKontrolo
+if [ -e RngKtrl-1.0-SNAPSHOT.jar ]; then
+  exec java -jar RngKtrl-1.0-SNAPSHOT.jar
+else
+  exec java -jar target/RngKtrl-1.0-SNAPSHOT.jar
+fi
 

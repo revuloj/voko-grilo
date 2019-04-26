@@ -55,7 +55,7 @@ public class RngKontrolo extends AbstractHandler
         try {
             // Declare response encoding and types
             response.setContentType("text/plain; charset=utf-8"); // JSON?
-            // check XML agains RelaxNG vokoxml.rnc
+            // check XML against RelaxNG vokoxml.rnc
             relaxng(request.getReader(),response.getWriter());
             // Declare response status code
             response.setStatus(HttpServletResponse.SC_OK); // chu tro malfrue?
@@ -77,16 +77,21 @@ public class RngKontrolo extends AbstractHandler
         // prepare valditor / load schema
         SchemaReader schemaReader = CompactSchemaReader.getInstance();
         ValidationDriver driver = new ValidationDriver(propertyMap,schemaReader);
-        System.out.println(rncFile.toString());
-        InputSource rncIn = driver.uriOrFileInputSource(rncFile.toString());
+        //System.out.println(rncFile.toString());
+        InputSource rncIn = ValidationDriver.uriOrFileInputSource(rncFile.toString());
 
         if (driver.loadSchema(rncIn)) {
             // XML fonto    
             //StringReader reader = new StringReader(Xml);
-            InputSource xmlIn = new InputSource(reader);
-            
-            // validigu
-            driver.validate(xmlIn);
+            try {
+                InputSource xmlIn = new InputSource(reader);
+                
+                // validigu
+                driver.validate(xmlIn);
+            } catch(org.xml.sax.SAXParseException E) {
+                    writer.write("(unknown file):" + E.getLineNumber() + ":" + E.getColumnNumber() + ": error: " + E.getMessage() + "\n");
+                    // System.out.println(E);
+            }            
             return writer.toString();
         } else {
             return null;

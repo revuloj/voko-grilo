@@ -5,3 +5,7 @@ curl -d $'<?xml version="1.0"?><vortaro>\n<art mrk="x">\n<kap>test</kap>\n<drv m
 
 echo "Test 2 Artikoleto, kie mankas mrk, <kap> and <art> kaj <drv>..."
 curl -d $'<?xml version="1.0"?><vortaro><art>\n<drv><dif>Test</dif></drv>\n</art>\n</vortaro>' http://localhost:8787
+
+echo "Test 3 Artikolo gril.xml kun enŝovitaj eraroj..."
+curl -d @gril.xml http://localhost:8787/
+

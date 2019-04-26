@@ -1,8 +1,10 @@
 #!/bin/bash
 
-if [ -e RngKtrl-1.0-SNAPSHOT.jar ]; then
-  exec java -jar RngKtrl-1.0-SNAPSHOT.jar
+cd voko/dtd
+
+if [ -e ${HOME}/RngKtrl-1.0-SNAPSHOT.jar ]; then
+  exec java -jar ${HOME}/RngKtrl-1.0-SNAPSHOT.jar
 else
-  exec java -jar target/RngKtrl-1.0-SNAPSHOT.jar
+  exec java -jar ${HOME}/target/RngKtrl-1.0-SNAPSHOT.jar
 fi
 

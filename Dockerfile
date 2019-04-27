@@ -11,8 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # ne necesa, se ni uzas maven...: apt install libjetty9-java libjing-java \
 
-RUN curl -LO https://github.com/revuloj/voko-iloj/archive/master.zip \
-  && unzip master.zip voko-iloj-master/dtd/* && rm master.zip 
+RUN curl -LO https://github.com/revuloj/voko-grundo/archive/master.zip \
+  && unzip master.zip voko-grundo-master/dtd/* && rm master.zip 
 
 
 RUN useradd -ms /bin/bash -u 1099 grilo
@@ -39,7 +39,7 @@ RUN useradd -ms /bin/bash -u 1099 grilo
 WORKDIR /home/grilo
 
 COPY --from=builder /home/grilo/RngKtrl-1.0-SNAPSHOT.jar /home/grilo/grilo /home/grilo/
-COPY --from=builder voko-iloj-master/dtd/ /home/grilo/grilo /home/grilo/voko/dtd/
+COPY --from=builder voko-grundo-master/dtd/ /home/grilo/grilo /home/grilo/voko/dtd/
 
 #ADD --chown=grilo:users ./grilo /home/grilo/
 

@@ -15,11 +15,13 @@
   <!-- FIXME change it to the project's website -->
   <url>http://steloj.de</url>
 
+  <!-- por pli novaj eldonoj vi povas serĉi ekz-e ĉe https://mvnrepository.com/artifact -->
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <jettyVersion>9.4.17.v20190418</jettyVersion>
+    <jettyVersion>9.4.35.v20201120</jettyVersion>
     <jingVersion>20091111</jingVersion>
   </properties>
 
@@ -40,6 +42,12 @@
       <artifactId>jetty-server</artifactId>
       <version>${jettyVersion}</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.relaxng/jing 
+    <dependency>
+        <groupId>org.relaxng</groupId>
+        <artifactId>jing</artifactId>
+        <version>20181222</version>
+    </dependency> -->
     <dependency>
       <groupId>com.thaiopensource</groupId>
       <artifactId>jing</artifactId>

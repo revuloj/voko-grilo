@@ -34,7 +34,7 @@ etikedo)
     git tag -f v${eldono} && git push && git push --tags -f
     ;;
 kreo)
-    echo "Kreante lokan procezujon (por docker) voko-grilo"
+    echo "Kreante lokan procezujon (por docker) voko-grilo kiel eldono ${eldono}"
     docker build --build-arg VG_TAG=v${eldono} --build-arg ZIP_SUFFIX=${eldono} -t voko-grilo .
     ;;
 esac

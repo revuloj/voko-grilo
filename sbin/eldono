@@ -35,6 +35,6 @@ etikedo)
     ;;
 kreo)
     echo "Kreante lokan procezujon (por docker) voko-grilo kiel eldono ${eldono}"
-    docker build --build-arg VG_TAG=v${eldono} --build-arg ZIP_SUFFIX=${eldono} -t voko-grilo .
+    docker build --build-arg VERSION=${eldono} -t voko-grilo .
     ;;
 esac

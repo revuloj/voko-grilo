@@ -1,5 +1,5 @@
 #### staĝo 1: por kompili ni bezonas maven kun ĝia stokejo de funkciaroj ktp...
-FROM openjdk:jre-slim as builder
+FROM debian:stable-slim as builder
 LABEL maintainer <diestel@steloj.de>
 
 # la variablon oni povas ŝanĝi ankaŭ per komandlinio, ekz-e --build-arg VG_TAG=v1e
@@ -8,6 +8,11 @@ ARG VG_TAG=master
 # do se VG_TAG estas "v1e", ZIP_SUFFIX estu "1e"
 # la variablon oni povas ŝanĝi ankaŭ per komandlinio --build-arg VG_TAG=...
 ARG ZIP_SUFFIX=master
+
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openjdk-17-jre  \
+    && rm -rf /var/lib/apt/lists/* 
 
 # Grilo
 RUN echo "VG_TAG=${VG_TAG} ZIP=SUFFIX=${ZIP_SUFFIX}" \
@@ -26,11 +31,15 @@ RUN curl -LO https://github.com/revuloj/voko-grundo/archive/${VG_TAG}.zip \
 
 #### staĝo 2: Nun kreu novan procesumon kun nur la kompilaĵo, sen fontoj, maven ktp.
 
-FROM openjdk:jre-slim
+FROM debian:stable-slim 
 LABEL maintainer <diestel@steloj.de>
+
 ARG ZIP_SUFFIX
 
-RUN useradd -ms /bin/bash -u 1099 grilo
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openjdk-17-jre  \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -ms /bin/bash -u 1099 grilo
 
 WORKDIR /home/grilo
 

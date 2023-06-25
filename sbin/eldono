@@ -8,7 +8,7 @@
 # Ni ankaŭ supozas, ke nova eldono okazas en git-branĉo kun la sama nomo
 # Ĉe publikigo marku la kodstaton per etikedo (git-tag) v${eldono}.
 # Dum la realigo vi povas ŝovi la etikedon ĉiam per celo "etikedo".
-eldono=2g
+eldono=2i
 
 # ni komprenas preparo | etikedo | kreo
 # kaj supozas ???, se nenio donita argumente
@@ -31,10 +31,10 @@ preparo)
 etikedo)
     echo "Provizante la aktualan staton per etikedo (git tag) v${eldono}"
     echo "kaj puŝante tiun staton al la centra deponejo"
-    git tag -f v${eldono} && git push && git push --tags -f
+    git tag -f v${eldono} && git push && git push origin v${eldono} -f
     ;;
 kreo)
     echo "Kreante lokan procezujon (por docker) voko-grilo kiel eldono ${eldono}"
-    docker build --build-arg VG_TAG=v${eldono} --build-arg ZIP_SUFFIX=${eldono} -t voko-grilo .
+    docker build --build-arg VERSION=${eldono} -t voko-grilo .
     ;;
 esac

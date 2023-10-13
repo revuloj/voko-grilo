@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Tiu ĉi skripto lanĉas la HTTP-servilon por kontrolado de Revo-XML per Jing.
+# La HTTP-servilo estas Jetty kaj la Javo-kodo por la trakto de kontrolpetoj
+# estas en la malsupra Javo-bibliteko (kp. src/ kaj pom.xml)
+
 cd voko/dtd
 
 if [ -e ${HOME}/RngKtrl-1.0-SNAPSHOT.jar ]; then

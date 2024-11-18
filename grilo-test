@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Skripto por fari kelkajn simplajn testojn, ĉu la servo funkcias. Necesas, ke
+# la servo aŭskultas ĉe la adreso http://localhost:8787
+
 echo "Test 1 malgranda, sed valida Voko-artikolo..."
 curl -d $'<?xml version="1.0"?><vortaro>\n<art mrk="x">\n<kap>test</kap>\n<drv mrk="x.0o"><kap><tld/>o</kap><dif>Test</dif></drv>\n</art>\n</vortaro>\n' http://localhost:8787
 

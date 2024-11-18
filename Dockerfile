@@ -1,8 +1,12 @@
-#### staĝo 1: certigu, ke vi antaŭe kompilis voko-grundo aŭ ŝargis de Github kiel pakaĵo
+#######################################################
+# staĝo 1: certigu, ke vi antaŭe kompilis voko-grundo aŭ ŝargis de Github kiel pakaĵo
+#######################################################
 ARG VERSION=latest
 FROM ghcr.io/revuloj/voko-grundo/voko-grundo:${VERSION} as grundo
 
-#### staĝo 2: por kompili ni bezonas maven kun ĝia stokejo de funkciaroj ktp...
+#######################################################
+# staĝo 2: por kompili ni bezonas maven kun ĝia stokejo de funkciaroj ktp...
+#######################################################
 FROM debian:stable-slim as builder
 LABEL maintainer <diestel@steloj.de>
 
@@ -15,7 +19,11 @@ LABEL maintainer <diestel@steloj.de>
 
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates-java openjdk-17-jre  \
+    ca-certificates-java openjdk-17-jre \
+    #locales \
+    #&& sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    #  dpkg-reconfigure --frontend=noninteractive locales && \
+    #  update-locale LANG=en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/* 
 
 WORKDIR /tmp
@@ -42,7 +50,7 @@ LABEL maintainer <diestel@steloj.de>
 #ARG ZIP_SUFFIX
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates-java openjdk-17-jre  \
+    ca-certificates-java openjdk-17-jre \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -ms /bin/bash -u 1099 grilo
 

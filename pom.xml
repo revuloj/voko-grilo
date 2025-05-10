@@ -21,7 +21,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <jettyVersion>11.0.17</jettyVersion> <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
+    <jettyVersion>11.0.24</jettyVersion> <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
     <jingVersion>20091111</jingVersion> <!-- https://mvnrepository.com/artifact/com.thaiopensource/jing -->
   </properties>
 

@@ -19,7 +19,7 @@ LABEL maintainer <diestel@steloj.de>
 
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates-java openjdk-17-jre \
+    ca-certificates-java openjdk-25-jre \
     #locales \
     #&& sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     #  dpkg-reconfigure --frontend=noninteractive locales && \
@@ -50,7 +50,7 @@ LABEL maintainer <diestel@steloj.de>
 #ARG ZIP_SUFFIX
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    ca-certificates-java openjdk-17-jre \
+    ca-certificates-java openjdk-25-jre \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -ms /bin/bash -u 1099 grilo
 

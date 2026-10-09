@@ -12,12 +12,12 @@ import java.io.Reader;
 import java.net.URL;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
 
 //import com.thaiopensource.relaxng.util.Driver;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
@@ -32,7 +32,7 @@ import com.thaiopensource.validate.SchemaReader;
 /**
  * Starting the Jetty server.
  */
-public class RngKontrolo extends AbstractHandler
+public class RngKontrolo extends HttpServlet
 {
     URL rncFile = this.getClass().getResource("/vokoxml.rnc");
 
@@ -46,11 +46,8 @@ public class RngKontrolo extends AbstractHandler
     }
 
     @Override
-    public void handle( String target,
-                        Request baseRequest,
-                        HttpServletRequest request,
-                        HttpServletResponse response ) throws IOException,
-                                                      ServletException
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException
     {
         try {
             // Declare response encoding and types
@@ -59,12 +56,17 @@ public class RngKontrolo extends AbstractHandler
             relaxng(request.getReader(),response.getWriter());
             // Declare response status code
             response.setStatus(HttpServletResponse.SC_OK); // chu tro malfrue?
-            // Inform jetty that this request has now been handled
-            baseRequest.setHandled(true);
+
         } catch (Exception Exc) {
             System.out.println(Exc.toString());
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {
+        doGet(request, response);
+    }    
 
     public String relaxng(Reader reader, Writer writer) throws org.xml.sax.SAXException, java.io.IOException {
 
@@ -119,7 +121,18 @@ error_list_json([Line:Pos-Msg|More],[json([line=Line,pos=Pos,msg=Msg])|MoreJson]
     {
         System.out.println("CLASSPATH:"+System.getProperty("java.class.path"));
         Server server = new Server(8787);
-        server.setHandler(new RngKontrolo());
+
+        // malnova jetty 11:
+        // server.setHandler(new RngKontrolo());
+
+        // nova en jetty 12: krei ServletContextHandler el EE10-Modul
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath("/");
+        // registru RngKontrolo kiel servileto
+        context.addServlet(RngKontrolo.class, "/*");
+        // donu la kuntekston kiel traktilon al la servilo
+        server.setHandler(context);
+
         server.start();
         //server.dumpStdErr();
         server.join();

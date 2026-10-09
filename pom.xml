@@ -19,9 +19,9 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <jettyVersion>11.0.24</jettyVersion> <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <jettyVersion>12.1.14</jettyVersion> <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
     <jingVersion>20091111</jingVersion> <!-- https://mvnrepository.com/artifact/com.thaiopensource/jing -->
   </properties>
 
@@ -32,10 +32,15 @@
       <version>4.13.2</version>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
-      <!-- scope>provided</scope -->
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>6.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty.ee10</groupId>
+      <artifactId>jetty-ee10-servlet</artifactId>
+      <version>${jettyVersion}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>

@@ -2,13 +2,13 @@
 # staĝo 1: certigu, ke vi antaŭe kompilis voko-grundo aŭ ŝargis de Github kiel pakaĵo
 #######################################################
 ARG VERSION=latest
-FROM ghcr.io/revuloj/voko-grundo/voko-grundo:${VERSION} as grundo
+FROM ghcr.io/revuloj/voko-grundo/voko-grundo:${VERSION} AS grundo
 
 #######################################################
 # staĝo 2: por kompili ni bezonas maven kun ĝia stokejo de funkciaroj ktp...
 #######################################################
-FROM debian:stable-slim as builder
-LABEL maintainer <diestel@steloj.de>
+FROM debian:stable-slim AS builder
+LABEL maintainer=<diestel@steloj.de>
 
 # la variablon oni povas ŝanĝi ankaŭ per komandlinio, ekz-e --build-arg VG_TAG=v1e
 #ARG VG_TAG=master
@@ -45,7 +45,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 #### staĝo 2: Nun kreu novan procesumon kun nur la kompilaĵo, sen fontoj, maven ktp.
 
 FROM debian:stable-slim 
-LABEL maintainer <diestel@steloj.de>
+LABEL maintainer=<diestel@steloj.de>
 
 #ARG ZIP_SUFFIX
 
